@@ -10,5 +10,10 @@ public abstract class Student {
     protected List<String> roommatePreferences;
     protected List<String> previousInternships;
 
+    /**
+     * 
+     * @param other Second student to compare connection strength to
+     * @return Number determined by how string their connection is
+     */
     public abstract int calculateConnectionStrength(Student other);
 }
