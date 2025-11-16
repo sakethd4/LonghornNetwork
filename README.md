@@ -1,6 +1,10 @@
 # LonghornNetwork
 ## ECE 422C Lab 4, 5, and 6: Networking with Fellow Longhorns!
 
+# Saketh Devarakonda
+# sd44852
+# Fall 25, Evan Speight
+
 ### Longhorn Network
 
 ### Overview
