@@ -54,7 +54,7 @@ public class StudentGraph{
     public void displayGraph(){
         System.out.println("\nStudent Graph:");
         for (UniversityStudent s : adjacencyList.keySet()) {
-            System.out.println(s.name +  " -> " + adjacencyList.get(s));
+            System.out.println(s.name +  " -> " + adjacencyList.get(s).toString());
         }
     }
 }
