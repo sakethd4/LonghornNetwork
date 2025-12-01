@@ -3,10 +3,6 @@ import java.util.concurrent.*;
 
 // Main.java - Self-contained testing & grading with multiple built‑in test cases.
 public class Main {
-    /**
-     * 
-     * @param args Command line input for the program
-     */
     public static void main(String[] args) {
         // Create a list of test cases.
         List<List<UniversityStudent>> testCases = new ArrayList<>();
@@ -37,10 +33,6 @@ public class Main {
     }
 
     // Test Case 1: Two groups (Group 1 with four students having mutual preferences, Group 2 with a pair)
-    /**
-     * 
-     * @return List of students for test case 1
-     */
     public static List<UniversityStudent> generateTestCase1() {
         List<UniversityStudent> students = new ArrayList<>();
 
@@ -77,10 +69,6 @@ public class Main {
 
     // Test Case 2: Three students in which one has "DummyCompany" as a previous internship.
     // This test case should yield a referral path when searching for "DummyCompany".
-    /**
-     * 
-     * @return List of students for test case 2
-     */
     public static List<UniversityStudent> generateTestCase2() {
         List<UniversityStudent> students = new ArrayList<>();
 
@@ -102,10 +90,6 @@ public class Main {
 
     // Test Case 3: Three students where one has no roommate preferences.
     // Two of them can be paired and one remains unpaired.
-    /**
-     * 
-     * @return List of students for test case 3
-     */
     public static List<UniversityStudent> generateTestCase3() {
         List<UniversityStudent> students = new ArrayList<>();
 
@@ -130,12 +114,6 @@ public class Main {
      * Accepts a list of UniversityStudent objects and a testCaseNumber (for output clarity).
      * Returns an integer score.
      */
-    /**
-     * 
-     * @param students List of students from testcases
-     * @param testCaseNumber Number of the given testcase
-     * @return Grade of the testcase
-     */
     public static int gradeLab(List<UniversityStudent> students, int testCaseNumber) {
         int score = 0;
         System.out.println("\n--- Automated Tests for Test Case " + testCaseNumber + " ---");
@@ -144,7 +122,7 @@ public class Main {
         try {
             StudentGraph graph = new StudentGraph(students);
             // Verify that each edge is reciprocal.
-            for (UniversityStudetont s : graph.getAllNodes()) {
+            for (UniversityStudent s : graph.getAllNodes()) {
                 List<StudentGraph.Edge> edges = graph.getNeighbors(s);
                 for (StudentGraph.Edge edge : edges) {
                     UniversityStudent neighbor = edge.neighbor;
@@ -241,4 +219,11 @@ public class Main {
         return score;
     }
 }
+
+
+
+
+
+
+
 
