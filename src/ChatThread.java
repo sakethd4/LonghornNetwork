@@ -17,6 +17,9 @@ public class ChatThread implements Runnable {
         this.message = message;
     }
 
+    /**
+     * Simulates a chat being sent between two students
+     */
     @Override
     public void run() {
         try {

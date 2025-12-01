@@ -119,10 +119,25 @@ public class DataParser {
             return null;
         }
         String[] interns = data.get("PreviousInternships").split(", ");
-        for (String s : roomies) {
-            roommates.add(s);
+        for (String s : interns) {
+            internships.add(s);
         }
 
         return new UniversityStudent(name, age, gender, year, major, gpa, roommates, internships);
+    }
+
+    public static void printOutput() {
+        try {
+            List<UniversityStudent> students = parseStudents("normal_1.txt");
+            for (UniversityStudent s : students) {
+            System.out.println(s);
+        }
+        } catch (IOException e) {
+            System.err.println("Error printing output: " + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        printOutput();
     }
 }

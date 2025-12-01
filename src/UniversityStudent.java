@@ -6,6 +6,7 @@ public class UniversityStudent extends Student {
     public UniversityStudent (String name, int age, String gender, int year, String major, double gpa, List<String> roomates, List<String> internships) {
         this.name = name;
         this.age = age;
+        this.gender = gender;
         this.year = year;
         this.major = major;
         this.gpa = gpa;
@@ -49,5 +50,10 @@ public class UniversityStudent extends Student {
         return strength;
     }
 
+    @Override
+    public String toString() {
+        return "UniversityStudent{" + "name='" + name + "'" + ", " + "age=" + age + ", " + "gender=" + gender + ", " + "year=" + year + ", " + "major='" + major + "'" + ", " + "GPA=" + gpa + ", " + "roommatePreferences=" + roommatePreferences + ", " + "previousInternships=" + previousInternships + "}";
+    }
+ 
 }
 
