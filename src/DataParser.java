@@ -18,22 +18,26 @@ public class DataParser {
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
 
+                // Beginning parsing once 'Student:' is seen
                 if (line.equals("Student:")) {
                     Map<String, String> studentData = new HashMap<>();
 
                     while ((line = reader.readLine()) != null) {
                         line = line.trim();
 
+                        // Stopping before the next 'Student:'
                         if (line.isBlank()) {
                             break;
                         }
 
+                        // Adding Category/Value pairs to map
                         if (line.contains(":")) {
                             String[] parsed = line.split(":", 2);
                             String key = parsed[0].trim();
                             String value = parsed[1].trim();
                             studentData.put(key, value);
                         } else {
+                            // Way to keep track of invalid formatting
                             studentData.put("Error" + count, line);    
                         }
                         count++;
@@ -53,8 +57,15 @@ public class DataParser {
         return students;
     }
 
+    /**
+     * 
+     * @param data A map containing parsed data and its associated category
+     * @return A University student created from the parsed input
+     */
     private static UniversityStudent createStudentFromMap(Map<String, String> data) {
 
+        // First checking improper formatting, then blank values, and if all are passed we assign the corresponding value.
+        // This pattern repeats for all of the data parsed.
         if (data.containsKey("Error0")) {
             System.err.println("Parsing error: Incorrect format in line: '" + data.get("Error0") + "'. Expected format 'Name: <value>'.");
             return null;     
@@ -158,6 +169,10 @@ public class DataParser {
         return new UniversityStudent(name, age, gender, year, major, gpa, roommates, internships);
     }
 
+    /**
+     * 
+     * @param filename String containing input file name
+     */
     public static void printOutput(String filename) {
         try {
             List<UniversityStudent> students = parseStudents(filename);

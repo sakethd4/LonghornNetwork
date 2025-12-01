@@ -1,10 +1,13 @@
 import java.util.concurrent.Semaphore;
 
 public class ChatThread implements Runnable {
+    // Code obtained from Ayush's Lab Lecture video.
+
     private UniversityStudent receiver;
     private UniversityStudent sender;
     private String message;
     private static final Semaphore semaphore = new Semaphore(1);
+
     /**
      * 
      * @param sender The user sending a message
@@ -18,7 +21,7 @@ public class ChatThread implements Runnable {
     }
 
     /**
-     * Simulates a chat being sent between two students
+     * Simulates a chat being sent between two students using semaphores
      */
     @Override
     public void run() {

@@ -2,6 +2,8 @@
 import java.util.concurrent.Semaphore;
 
 public class FriendRequestThread implements Runnable {
+    // Code obtained from Ayush's Lab Lecture video.
+
     private UniversityStudent receiver;
     private UniversityStudent sender;
     private static final Semaphore semaphore = new Semaphore(1);
@@ -18,6 +20,9 @@ public class FriendRequestThread implements Runnable {
     }
 
     @Override
+    /**
+     * Simulate a friend request being sent between two students using semaphores
+     */
     public void run() {
         try {
             semaphore.acquire();
