@@ -52,7 +52,7 @@ public class UniversityStudent extends Student {
 
     @Override
     public String toString() {
-        return "UniversityStudent{" + "name='" + name + "'" + ", " + "age=" + age + ", " + "gender=" + gender + ", " + "year=" + year + ", " + "major='" + major + "'" + ", " + "GPA=" + gpa + ", " + "roommatePreferences=" + roommatePreferences + ", " + "previousInternships=" + previousInternships + "}";
+        return "UniversityStudent{" + "name='" + name + "'" + ", " + "age=" + age + ", " + "gender='" + gender + "'" + ", " + "year=" + year + ", " + "major='" + major + "'" + ", " + "GPA=" + gpa + ", " + "roommatePreferences=" + roommatePreferences + ", " + "previousInternships=" + previousInternships + "}";
     }
  
 }
