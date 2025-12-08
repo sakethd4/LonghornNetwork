@@ -13,8 +13,12 @@ function Home() {
     setLoading(false);
   };
 
+  const backgroundStyle = {
+    '--home-bg': `url(${process.env.PUBLIC_URL}/campus-background.jpg)`,
+  };
+
   return (
-    <div className="home-container">
+    <div className="home-container" style={backgroundStyle}>
       <h1 className="home-title">Longhorn Network</h1>
       
       <div className="testcase-bar">

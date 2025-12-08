@@ -10,8 +10,16 @@ function StudentGraph({ students, useJavaBackend = true }) {
   const [loading, setLoading] = useState(false);
   const [hoverNode, setHoverNode] = useState(null);
   const graphWrapperRef = useRef(null);
+  const logoRef = useRef(null);
 
   useEffect(() => {
+    // Preload Longhorn logo
+    if (!logoRef.current) {
+      const img = new Image();
+      img.src = `${process.env.PUBLIC_URL}/longhorn-logo.png`;
+      logoRef.current = img;
+    }
+
     const loadGraphData = async () => {
       if (!selectedTestCase) {
         setGraphData({ nodes: [], links: [] });
@@ -130,21 +138,36 @@ function StudentGraph({ students, useJavaBackend = true }) {
         <ForceGraph2D
           graphData={graphData}
           nodeLabel={() => null}
-          nodeColor={node => {
-            // Color nodes by major (different colors for different majors)
-            const colors = [
-              '#61dafb', '#4caf50', '#ff9800', '#9c27b0', 
-              '#f44336', '#2196f3', '#ffeb3b', '#00bcd4'
-            ];
-            const majorHash = (node.major || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-            return colors[majorHash % colors.length];
-          }}
-          nodeVal={node => {
-            // Node size based on number of connections
+          nodeCanvasObject={(node, ctx) => {
             const connections = (graphData.links || []).filter(
               link => link.source === node.id || link.target === node.id
             ).length;
-            return 8 + connections * 2;
+            const size = 18 + connections * 2;
+            const img = logoRef.current;
+
+            if (img && img.complete) {
+              ctx.save();
+              ctx.beginPath();
+              ctx.arc(node.x, node.y, size / 2, 0, 2 * Math.PI, false);
+              ctx.clip();
+              ctx.drawImage(img, node.x - size / 2, node.y - size / 2, size, size);
+              ctx.restore();
+            } else {
+              ctx.beginPath();
+              ctx.arc(node.x, node.y, size / 2, 0, 2 * Math.PI, false);
+              ctx.fillStyle = '#BF5700';
+              ctx.fill();
+            }
+          }}
+          nodePointerAreaPaint={(node, color, ctx) => {
+            const connections = (graphData.links || []).filter(
+              link => link.source === node.id || link.target === node.id
+            ).length;
+            const size = 18 + connections * 2;
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, size / 2, 0, 2 * Math.PI, false);
+            ctx.fillStyle = color;
+            ctx.fill();
           }}
           linkLabel={link => `Connection Strength: ${link.weight}`}
           linkWidth={link => Math.max(2, link.weight / 2)}
@@ -196,7 +219,11 @@ function StudentGraph({ students, useJavaBackend = true }) {
       <div className="graph-legend">
         <h3>Graph Legend</h3>
         <div className="legend-item">
-          <div className="legend-color" style={{ backgroundColor: '#61dafb' }}></div>
+          <img
+            src={`${process.env.PUBLIC_URL}/longhorn-logo.png`}
+            alt="Longhorn logo"
+            className="legend-icon"
+          />
           <span>Node: Student</span>
         </div>
         <div className="legend-item">
