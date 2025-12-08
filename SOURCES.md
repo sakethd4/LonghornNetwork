@@ -127,11 +127,6 @@ This document cites all sources, libraries, frameworks, and documentation used i
   - D3.js force simulation concepts
 - **Usage**: Automatic layout of student connection graphs
 
-### Graph Theory
-- **Concepts**: Nodes, edges, weighted graphs, adjacency lists
-- **Reference**: Standard graph theory principles
-- **Usage**: Representing student connections and relationships
-
 ## CSS and Styling
 
 ### CSS Flexbox
@@ -243,16 +238,3 @@ All open-source libraries used in this project are licensed under MIT or compati
 ### Backend Integration
 - **NetworkServer.java**: Custom HTTP server exposing Java functionality as REST APIs
 - **API Service**: JavaScript service layer for communicating with Java backend
-
-## Acknowledgments
-
-- React team for the excellent framework
-- Vasco Asturiano for react-force-graph-2d
-- React Router team for routing capabilities
-- Google Chrome team for Web Vitals
-- All open-source contributors whose work made this project possible
-- Ayush's Lab Lecture video (referenced in Java code comments) for algorithm implementations:
-  - Gale-Shapley algorithm implementation
-  - UniversityStudent class structure
-  - ChatThread and FriendRequestThread implementations
-

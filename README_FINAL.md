@@ -1,9 +1,19 @@
 # LonghornNetwork
 ## ECE 422C Lab 4, 5, and 6: Networking with Fellow Longhorns!
+##
 
 # Saketh Devarakonda
 # sd44852
 # Fall 25, Evan Speight 
+
+### Step 5 of Longhorn Network
+To run step 5 of the lab, please refer to `STARTUP.md`
+
+a. I did use AI to code the UI, specifically Cursor AI. The sources I and the AI used are listed in the `SOURCES.md` file. The AI was very good at providing a very basic functional framework and implementing cool components (interactive graphs). The AI really struggled with specific design features however, such as image backgrounds, text/textbox formatting and so on. To supplement what it struggled with I used the premade css files it provided and began to edit lots of specific properties myself, using React documentation to look up css properties and achieve the look I wanted. 
+
+b. Though I used AI, the hardest part for me to learn was the usage of REST APIs to connect the the java files to the React front end. Though it was pretty similar to networking, there was a lot of random new syntax I had to learn to understand how data was being transferred between my code and the app.
+
+c. I believe it would be most appropriate to teach React during the networking/multithreading/swing unit as it defenitely holds the most relevance to what React is like. I believe networking really helped in understanding how REST was used. I do believe that if you wanted to teach React in this unit however, you may need to drop the content of Swing, as this unit would have too much to learn. I do believe React is much better than Swing anyhow, and it gives students the chance to learn many practical skills in UI/network design.
 
 ### Longhorn Network
 
