@@ -47,10 +47,7 @@ function Roommates() {
   return (
     <div className="roommates-container">
       <h1>Roommates</h1>
-      <p className="roommates-description">
-        Roommate pairs calculated using the Gale-Shapley algorithm from Java backend.
-      </p>
-
+      
       {loading && (
         <div className="loading-message">Loading roommate pairs from Java backend...</div>
       )}

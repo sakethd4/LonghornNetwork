@@ -71,7 +71,6 @@ function Internships() {
       <h1>Internships</h1>
       <p className="internships-description">
         Find the optimal referral path from a student to someone who has worked at a specific company.
-        Uses ReferralPathFinder.java with Dijkstra's algorithm.
       </p>
 
       <div className="internships-controls">

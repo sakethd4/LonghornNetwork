@@ -5,7 +5,6 @@ import './GraphVisualization.css';
 function GraphVisualization({ graphData, title, showWeights = true }) {
   const [hoverNode, setHoverNode] = useState(null);
   const graphWrapperRef = useRef(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ left: 0, top: 0, transform: 'translateY(-100%)' });
 
   if (!graphData || !graphData.nodes || graphData.nodes.length === 0) {
     return <div className="graph-placeholder">No graph data available</div>;
@@ -17,7 +16,7 @@ function GraphVisualization({ graphData, title, showWeights = true }) {
       <div className="graph-wrapper" ref={graphWrapperRef}>
         <ForceGraph2D
           graphData={graphData}
-          nodeLabel={node => `${node.name}\n${node.major}\nAge: ${node.age}, Year: ${node.year}`}
+          nodeLabel={() => null}
           nodeColor={node => {
             // Color nodes by major (different colors for different majors)
             const colors = [
@@ -52,51 +51,6 @@ function GraphVisualization({ graphData, title, showWeights = true }) {
           cooldownTicks={100}
           onNodeHover={node => {
             setHoverNode(node);
-            if (node && graphWrapperRef.current) {
-              const container = graphWrapperRef.current;
-              const containerWidth = container.offsetWidth;
-              const containerHeight = container.offsetHeight;
-              const tooltipWidth = 400; // max-width of tooltip
-              const tooltipHeight = 200; // approximate height
-              const padding = 20;
-              
-              // ForceGraph2D uses center-origin coordinates, convert to top-left origin
-              let left = (node.x || 0) + containerWidth / 2;
-              let top = (node.y || 0) + containerHeight / 2;
-              
-              // Adjust to keep tooltip within bounds
-              // Try to position above the node first
-              let adjustedLeft = left + 10;
-              let adjustedTop = top - 10;
-              let transform = 'translateY(-100%)';
-              
-              // Check right boundary
-              if (adjustedLeft + tooltipWidth > containerWidth - padding) {
-                adjustedLeft = containerWidth - tooltipWidth - padding;
-              }
-              
-              // Check left boundary
-              if (adjustedLeft < padding) {
-                adjustedLeft = padding;
-              }
-              
-              // Check top boundary - if tooltip would go above, position below instead
-              if (adjustedTop - tooltipHeight < padding) {
-                adjustedTop = top + 30; // Position below node
-                transform = 'translateY(0)';
-              }
-              
-              // Check bottom boundary
-              if (adjustedTop + tooltipHeight > containerHeight - padding) {
-                adjustedTop = containerHeight - tooltipHeight - padding;
-              }
-              
-              setTooltipPosition({
-                left: adjustedLeft,
-                top: adjustedTop,
-                transform: transform
-              });
-            }
           }}
           onBackgroundClick={() => {
             setHoverNode(null);
@@ -107,15 +61,14 @@ function GraphVisualization({ graphData, title, showWeights = true }) {
           }}
         />
         
-        {/* Hover tooltip */}
+        {/* Hover tooltip - fixed in top right */}
         {hoverNode && (
           <div 
             className="node-tooltip"
             style={{
               position: 'absolute',
-              left: `${tooltipPosition.left}px`,
-              top: `${tooltipPosition.top}px`,
-              transform: tooltipPosition.transform || 'translateY(-100%)',
+              right: '20px',
+              top: '20px',
               pointerEvents: 'none',
               zIndex: 1000
             }}
