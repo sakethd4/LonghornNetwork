@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useTestCase } from '../context/TestCaseContext';
+import './Page.css';
 import './Chat.css';
 
 function Chat() {
@@ -54,7 +55,7 @@ function Chat() {
 
   if (!testCaseData) {
     return (
-      <div className="chat-container">
+      <div className="page-container chat-container">
         <div className="chat-message">
           <p>Please select a test case from the Home page first.</p>
         </div>
@@ -63,7 +64,7 @@ function Chat() {
   }
 
   return (
-    <div className="chat-container">
+    <div className="page-container chat-container">
       <h1>Chat</h1>
       
       <div className="chat-search-section">
@@ -108,7 +109,13 @@ function Chat() {
           </div>
         </div>
       )}
-
+      
+      {!selectedStudent && (
+        <div className="chat-message">
+          <p>Please select a student from the dropdown above to view their chat history.</p>
+        </div>
+      )}
+    
       {selectedStudent && selectedRecipient && (
         <div className="chat-messages-container">
           {chatMessages.length === 0 ? (

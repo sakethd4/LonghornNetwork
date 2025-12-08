@@ -150,11 +150,11 @@
 
 .student-details p {
   margin: 0;
-  color: #BF5700;
+  color: #666;
   font-size: 0.95rem;
 }
 
 .student-details strong {
-  color: #BF5700;
+  color: #282c34;
 }
 

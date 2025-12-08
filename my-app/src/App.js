@@ -10,9 +10,14 @@ import Roommates from './pages/Roommates';
 import Internships from './pages/Internships';
 
 function App() {
+  const backgroundStyle = {
+    '--home-bg': `url(${process.env.PUBLIC_URL}/campus-background.jpg)`,
+    '--page-bg': `url(${process.env.PUBLIC_URL}/campus-background.jpg)`
+  };
+
   return (
     <TestCaseProvider>
-      <div className="App">
+      <div className="App" style={backgroundStyle}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

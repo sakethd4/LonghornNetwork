@@ -1,20 +1,46 @@
 .roommates-container {
+  position: relative;
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
   min-height: calc(100vh - 80px);
+  width: 100%;
+  box-sizing: border-box;
+  background-image: var(--page-bg, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.roommates-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 0;
+}
+
+.roommates-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .roommates-container h1 {
-  color: #282c34;
+  color: #BF5700;
   font-size: 2.5rem;
   margin-bottom: 1rem;
   text-align: center;
+  text-shadow: 1px 1px 2px rgb(91, 64, 19);
 }
 
 .roommates-description {
   text-align: center;
-  color: #666;
+  color: #BF5700;
   font-size: 1.1rem;
   margin-bottom: 2rem;
 }
@@ -22,22 +48,27 @@
 .roommates-message {
   padding: 2rem;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
   border: 1px solid #ddd;
   margin-top: 2rem;
+  backdrop-filter: blur(3px);
 }
 
 .roommates-message p {
-  color: #666;
+  color: #BF5700;
   font-size: 1.1rem;
 }
 
 .loading-message {
   padding: 2rem;
   text-align: center;
-  color: #666;
+  color: #BF5700;
   font-size: 1.1rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  backdrop-filter: blur(3px);
 }
 
 .error-message {
@@ -57,16 +88,18 @@
 .roommate-pairs-list {
   margin-top: 2rem;
   padding: 1.5rem;
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
   border: 1px solid #ddd;
+  backdrop-filter: blur(3px);
 }
 
 .roommate-pairs-list h3 {
-  color: #282c34;
+  color: #BF5700;
   font-size: 1.5rem;
   margin-bottom: 1rem;
   text-align: center;
+  text-shadow: 1px 1px 2px rgb(91, 64, 19);
 }
 
 .pairs-grid {
@@ -80,10 +113,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: white;
-  border: 2px solid #2196f3;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #BF5700;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -112,7 +146,7 @@
 
 .pair-connector {
   font-size: 1.5rem;
-  color: #2196f3;
+  color: #BF5700;
   margin: 0 1rem;
   font-weight: bold;
 }
@@ -120,14 +154,15 @@
 .no-pairs-message {
   padding: 2rem;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
   border: 1px solid #ddd;
   margin-top: 2rem;
+  backdrop-filter: blur(3px);
 }
 
 .no-pairs-message p {
-  color: #666;
+  color: #BF5700;
   font-size: 1.1rem;
 }
 
