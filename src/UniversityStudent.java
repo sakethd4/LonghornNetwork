@@ -4,6 +4,8 @@ public class UniversityStudent extends Student {
     // Code obtained from Ayush's Lab Lecture video.
 
     private UniversityStudent roommate;
+    private Map<UniversityStudent, UniversityStudent> friends;
+    private Map<UniversityStudent, ArrayList<String>> chatHistory;
 
     /**
      * 
@@ -44,6 +46,21 @@ public class UniversityStudent extends Student {
         return roommate;
     }
 
+    /**
+     * 
+     * @return friends list of student
+     */ 
+    public Map<UniversityStudent, UniversityStudent> getFriends() {
+        return friends;
+    }
+    
+    /**
+     * 
+     * @return chat history of student
+     */ 
+    public Map<UniversityStudent, ArrayList<String>> getChatHistory() {
+        return chatHistory;
+    }
 
     @Override
     /**

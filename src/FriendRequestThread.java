@@ -27,7 +27,12 @@ public class FriendRequestThread implements Runnable {
         try {
             semaphore.acquire();
 
-            System.out.println("Friend request sent to " + receiver.name + " from " + sender.name);
+            if (receiver.getFriends().containsKey(sender)) {
+                System.out.println(sender.name + "has already sent a friend request to " + receiver.name);
+            } else {
+                receiver.getFriends().put(sender, receiver);
+                System.out.println("Friend request sent to " + receiver.name + " from " + sender.name);
+            }    
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.err.println("Friend request interrupted: " + e.getMessage());

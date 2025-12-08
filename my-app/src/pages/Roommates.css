@@ -1,0 +1,133 @@
+.roommates-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.roommates-container h1 {
+  color: #282c34;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.roommates-description {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.roommates-message {
+  padding: 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 2rem;
+}
+
+.roommates-message p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.loading-message {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  padding: 1rem;
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+  color: #c62828;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.roommate-graph-section {
+  margin-top: 2rem;
+}
+
+.roommate-pairs-list {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.roommate-pairs-list h3 {
+  color: #282c34;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.pairs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.pair-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: white;
+  border: 2px solid #2196f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pair-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.pair-student {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.pair-student strong {
+  color: #282c34;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.pair-student span {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.pair-connector {
+  font-size: 1.5rem;
+  color: #2196f3;
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+.no-pairs-message {
+  padding: 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 2rem;
+}
+
+.no-pairs-message p {
+  color: #666;
+  font-size: 1.1rem;
+}
+

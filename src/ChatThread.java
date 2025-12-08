@@ -1,4 +1,5 @@
 import java.util.concurrent.Semaphore;
+import java.util.*;
 
 public class ChatThread implements Runnable {
     // Code obtained from Ayush's Lab Lecture video.
@@ -28,6 +29,10 @@ public class ChatThread implements Runnable {
         try {
             semaphore.acquire();
 
+            if (!receiver.getChatHistory().containsKey(sender)) {
+                receiver.getChatHistory().put(sender, new ArrayList<>());
+            }
+            receiver.getChatHistory().get(sender).add(message);
             System.out.println(sender.name + " said " + message + " to " + receiver.name);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
