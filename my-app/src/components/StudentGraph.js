@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { api } from '../services/api';
 import { useTestCase } from '../context/TestCaseContext';
@@ -9,6 +9,8 @@ function StudentGraph({ students, useJavaBackend = true }) {
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [loading, setLoading] = useState(false);
   const [hoverNode, setHoverNode] = useState(null);
+  const graphWrapperRef = useRef(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
 
   useEffect(() => {
     const loadGraphData = async () => {
@@ -125,7 +127,7 @@ function StudentGraph({ students, useJavaBackend = true }) {
 
   return (
     <div className="graph-container">
-      <div className="graph-wrapper" style={{ position: 'relative' }}>
+      <div className="graph-wrapper" ref={graphWrapperRef} style={{ position: 'relative' }}>
         <ForceGraph2D
           graphData={graphData}
           nodeLabel={node => `${node.name}\n${node.major}\nAge: ${node.age}, Year: ${node.year}`}
@@ -158,6 +160,51 @@ function StudentGraph({ students, useJavaBackend = true }) {
           cooldownTicks={100}
           onNodeHover={node => {
             setHoverNode(node);
+            if (node && graphWrapperRef.current) {
+              const container = graphWrapperRef.current;
+              const containerWidth = container.offsetWidth;
+              const containerHeight = container.offsetHeight;
+              const tooltipWidth = 400; // max-width of tooltip
+              const tooltipHeight = 200; // approximate height
+              const padding = 20;
+              
+              // ForceGraph2D uses center-origin coordinates, convert to top-left origin
+              let left = (node.x || 0) + containerWidth / 2;
+              let top = (node.y || 0) + containerHeight / 2;
+              
+              // Adjust to keep tooltip within bounds
+              // Try to position above the node first
+              let adjustedLeft = left + 10;
+              let adjustedTop = top - 10;
+              let transform = 'translateY(-100%)';
+              
+              // Check right boundary
+              if (adjustedLeft + tooltipWidth > containerWidth - padding) {
+                adjustedLeft = containerWidth - tooltipWidth - padding;
+              }
+              
+              // Check left boundary
+              if (adjustedLeft < padding) {
+                adjustedLeft = padding;
+              }
+              
+              // Check top boundary - if tooltip would go above, position below instead
+              if (adjustedTop - tooltipHeight < padding) {
+                adjustedTop = top + 30; // Position below node
+                transform = 'translateY(0)';
+              }
+              
+              // Check bottom boundary
+              if (adjustedTop + tooltipHeight > containerHeight - padding) {
+                adjustedTop = containerHeight - tooltipHeight - padding;
+              }
+              
+              setTooltipPosition({
+                left: adjustedLeft,
+                top: adjustedTop,
+                transform: transform
+              });
+            }
           }}
           onBackgroundClick={() => {
             setHoverNode(null);
@@ -174,9 +221,9 @@ function StudentGraph({ students, useJavaBackend = true }) {
             className="node-tooltip"
             style={{
               position: 'absolute',
-              left: `${(hoverNode.x || 0) + 10}px`,
-              top: `${(hoverNode.y || 0) - 10}px`,
-              transform: 'translateY(-100%)',
+              left: `${tooltipPosition.left}px`,
+              top: `${tooltipPosition.top}px`,
+              transform: tooltipPosition.transform || 'translateY(-100%)',
               pointerEvents: 'none',
               zIndex: 1000
             }}

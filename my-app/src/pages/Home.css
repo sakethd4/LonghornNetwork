@@ -4,7 +4,10 @@
   align-items: center;
   min-height: calc(100vh - 80px);
   width: 100%;
+  max-width: 100%;
   padding: 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .home-title {
@@ -57,8 +60,9 @@
 
 .testcase-data-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 100%;
   margin-top: 2rem;
+  box-sizing: border-box;
 }
 
 .graph-section {

@@ -21,6 +21,7 @@ public class NetworkServer {
         server.createContext("/api/graph/", new GraphHandler());
         server.createContext("/api/students/", new StudentsHandler());
         server.createContext("/api/roommates/", new RoommatesHandler());
+        server.createContext("/api/referral/", new ReferralPathHandler());
         
         server.setExecutor(null);
         server.start();
@@ -30,6 +31,7 @@ public class NetworkServer {
         System.out.println("  GET /api/graph/{1|2|3} - Get graph data for test case");
         System.out.println("  GET /api/students/?testcase={1|2|3} - Get students for test case");
         System.out.println("  GET /api/roommates/{1|2|3} - Get roommate pairs graph (Gale-Shapley)");
+        System.out.println("  GET /api/referral/?testcase={1|2|3}&student={name}&company={name} - Find referral path");
     }
 
     // Handler for test case data
@@ -139,6 +141,72 @@ public class NetworkServer {
                 
                 // Build graph data for roommate pairs
                 String json = roommatesToJson(studentsCopy);
+                sendJsonResponse(exchange, 200, json);
+            } catch (Exception e) {
+                e.printStackTrace();
+                sendJsonResponse(exchange, 500, "{\"error\": \"" + e.getMessage().replace("\"", "\\\"") + "\"}");
+            }
+        }
+    }
+
+    // Handler for referral path finding (using ReferralPathFinder)
+    static class ReferralPathHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            handleCors(exchange);
+            if ("OPTIONS".equals(exchange.getRequestMethod())) {
+                sendResponse(exchange, 200, "");
+                return;
+            }
+
+            try {
+                String query = exchange.getRequestURI().getQuery();
+                if (query == null) {
+                    sendJsonResponse(exchange, 400, "{\"error\": \"Missing query parameters\"}");
+                    return;
+                }
+
+                // Parse query parameters
+                Map<String, String> params = new HashMap<>();
+                for (String param : query.split("&")) {
+                    String[] pair = param.split("=");
+                    if (pair.length == 2) {
+                        params.put(pair[0], java.net.URLDecoder.decode(pair[1], StandardCharsets.UTF_8));
+                    }
+                }
+
+                int testCaseNum = Integer.parseInt(params.getOrDefault("testcase", "1"));
+                String studentName = params.get("student");
+                String companyName = params.get("company");
+
+                if (studentName == null || companyName == null) {
+                    sendJsonResponse(exchange, 400, "{\"error\": \"Missing student or company parameter\"}");
+                    return;
+                }
+
+                List<UniversityStudent> students = getTestCaseStudents(testCaseNum);
+                
+                // Find the starting student
+                UniversityStudent startStudent = null;
+                for (UniversityStudent s : students) {
+                    if (s.name.equals(studentName)) {
+                        startStudent = s;
+                        break;
+                    }
+                }
+
+                if (startStudent == null) {
+                    sendJsonResponse(exchange, 404, "{\"error\": \"Student not found: " + studentName + "\"}");
+                    return;
+                }
+
+                // Create graph and find referral path
+                StudentGraph graph = new StudentGraph(students);
+                ReferralPathFinder pathFinder = new ReferralPathFinder(graph);
+                List<UniversityStudent> path = pathFinder.findReferralPath(startStudent, companyName);
+
+                // Convert path to JSON (even if empty, return it)
+                String json = referralPathToJson(path);
                 sendJsonResponse(exchange, 200, json);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -331,6 +399,38 @@ public class NetworkServer {
         }
         json.append("]");
         
+        json.append("}");
+        return json.toString();
+    }
+
+    // Convert referral path to JSON
+    private static String referralPathToJson(List<UniversityStudent> path) {
+        StringBuilder json = new StringBuilder("{");
+        json.append("\"path\":[");
+        if (path != null) {
+            for (int i = 0; i < path.size(); i++) {
+                UniversityStudent student = path.get(i);
+                if (i > 0) json.append(",");
+                json.append("{");
+                json.append("\"name\":\"").append(escapeJson(student.name)).append("\",");
+                json.append("\"age\":").append(student.age).append(",");
+                json.append("\"gender\":\"").append(escapeJson(student.gender)).append("\",");
+                json.append("\"year\":").append(student.year).append(",");
+                json.append("\"major\":\"").append(escapeJson(student.major)).append("\",");
+                json.append("\"gpa\":").append(student.gpa).append(",");
+                json.append("\"previousInternships\":[");
+                if (student.previousInternships != null) {
+                    for (int j = 0; j < student.previousInternships.size(); j++) {
+                        if (j > 0) json.append(",");
+                        json.append("\"").append(escapeJson(student.previousInternships.get(j))).append("\"");
+                    }
+                }
+                json.append("]");
+                json.append("}");
+            }
+        }
+        json.append("],");
+        json.append("\"length\":").append(path != null ? path.size() : 0);
         json.append("}");
         return json.toString();
     }

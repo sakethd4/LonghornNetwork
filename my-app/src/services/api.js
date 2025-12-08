@@ -36,6 +36,32 @@ export const api = {
       throw new Error(`Failed to load students for test case ${testCaseNumber}`);
     }
     return response.json();
+  },
+
+  // Find referral path (uses ReferralPathFinder.java)
+  findReferralPath: async (testCaseNumber, studentName, companyName) => {
+    const encodedStudent = encodeURIComponent(studentName);
+    const encodedCompany = encodeURIComponent(companyName);
+    try {
+      const response = await fetch(`${API_BASE_URL}/referral/?testcase=${testCaseNumber}&student=${encodedStudent}&company=${encodedCompany}`);
+      if (!response.ok) {
+        let errorMessage = `Failed to find referral path (Status: ${response.status})`;
+        try {
+          const error = await response.json();
+          errorMessage = error.error || errorMessage;
+        } catch (e) {
+          const text = await response.text();
+          errorMessage = text || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+      return response.json();
+    } catch (error) {
+      if (error.message.includes('fetch')) {
+        throw new Error('Failed to connect to backend. Make sure the Java server is running on http://localhost:8080');
+      }
+      throw error;
+    }
   }
 };
 
