@@ -42,6 +42,11 @@ function Home() {
         </button>
       </div>
 
+      {/* Show a notice when no testcase is selected */}
+      {!selectedTestCase && !loading && (
+        <div className="notice-message">Please select testcase.</div>
+      )}
+
       {loading && (
         <div className="loading-message">Loading test case data...</div>
       )}

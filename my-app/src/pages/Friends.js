@@ -23,6 +23,7 @@ function Friends() {
   if (!testCaseData) {
     return (
       <div className="page-container chat-container">
+        <h1>Friends</h1>
         <div className="chat-message">
           <p>Please select a test case from the Home page first.</p>
         </div>

@@ -80,27 +80,7 @@ npm start
 - `npm install` will install dependencies; `npm start` runs the dev server (default `http://localhost:3000`).
 - If `npm start` fails with node version issues, upgrade/downgrade Node to a compatible LTS release.
 
-**4 How the frontend and backend integrate**
-- The backend exposes endpoints on `http://localhost:8080` (CORS wildcard is set in the Java server, so the React dev server can call it).
-- Example endpoints to test manually (use browser or `curl`):
-  - Get test case 1 students:
-```cmd
-curl http://localhost:8080/api/testcase/1
-```
-  - Get graph JSON for test case 2:
-```cmd
-curl http://localhost:8080/api/graph/2
-```
-  - Get roommate pairs for test case 3:
-```cmd
-curl http://localhost:8080/api/roommates/3
-```
-  - Find a referral path (example):
-```cmd
-curl "http://localhost:8080/api/referral/?testcase=2&student=Greg&company=DummyCompany"
-```
-
-**5 Common troubleshooting**
+**4 Common troubleshooting**
 - Backend fails to compile:
   - Ensure you're running a JDK (not only JRE).
   - Use `javac -d bin src\*.java` to find compile-time errors and fix missing imports/naming issues.
@@ -120,13 +100,13 @@ taskkill /PID <pid> /F
 
 
 
-**6 Overview**
+**5 Overview**
 - When the tester unzips, they should:
   1. Install JDK + Node.js (if not installed)
   2. Compile and start Java server (see step 2)
   3. `cd my-app`, run `npm install` and `npm start` (see step 3)
 
-**7 Verification checklist (what to verify after starting both servers)**
+**6 Verification checklist (what to verify after starting both servers)**
 - Backend prints startup message and lists endpoints on `http://localhost:8080`.
 - `curl http://localhost:8080/api/testcase/1` returns JSON array of students.
 - `npm start` opens React app on `http://localhost:3000` and UI loads without network errors in the browser console.
